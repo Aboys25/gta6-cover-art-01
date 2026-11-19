@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Vice Cover Studio — GTA-style cover art maker</title>
+<link rel="stylesheet" href="./style.css">
+</head>
+<body>
+<header class="topbar">
+  <div class="brand"><span class="brand-mark">VC</span> Vice Cover Studio</div>
+  <p class="tagline">Your photo. Your caption. A poster cover, in seconds — offline.</p>
+</header>
+<main class="app">
+  <section class="controls" aria-label="Cover controls">
+    <div class="step">
+      <h2><span class="num">1</span> Photos</h2>
+      <div id="photoStrip" class="strip" aria-label="Loaded photos"></div>
+      <div class="row">
+        <label class="file-btn">Add photos
+          <input id="photoInput" type="file" accept="image/*" multiple hidden>
+        </label>
+        <button id="addSample" type="button" class="ghost">+ Sample</button>
+      </div>
+      <p class="hint">Drop images anywhere on the page. Up to 6 photos.</p>
+    </div>
+
+    <div class="step">
+      <h2><span class="num">2</span> Layout</h2>
+      <div id="layoutRow" class="toggles" role="group" aria-label="Panel layout"></div>
+    </div>
+
+    <div class="step">
+      <h2><span class="num">3</span> Grade</h2>
+      <div id="gradeRow" class="toggles" role="group" aria-label="Colour grade"></div>
+    </div>
+
+    <div class="step">
+      <h2><span class="num">4</span> Caption</h2>
+      <label>Title
+        <input id="title" type="text" maxlength="30" value="SUNSET HEIST" autocomplete="off">
+      </label>
+      <label>Subtitle
+        <input id="subtitle" type="text" maxlength="40" value="NEON NIGHTS · 2026" autocomplete="off">
+      </label>
+      <label>Caption preset
+        <select id="titlePreset">
+          <option value="SUNSET HEIST|NEON NIGHTS · 2026">Sunset Heist</option>
+          <option value="BOULEVARD QUEEN|NEON COAST · 2026">Boulevard Queen</option>
+          <option value="MIDNIGHT RUN|PALM NOIR · 2026">Midnight Run</option>
+          <option value="GOLDEN GETAWAY|SUNSET STRIP · 2026">Golden Getaway</option>
+        </select>
+      </label>
+      <div id="titleStyleRow" class="toggles" role="group" aria-label="Title style"></div>
+    </div>
+
+    <div class="step">
+      <h2><span class="num">5</span> Panel <span id="panelLabel" class="panel-label">Panel 1 of 3</span></h2>
+      <div class="row">
+        <button id="prevPanel" type="button" class="ghost">← Prev</button>
+        <button id="nextPanel" type="button" class="ghost">Next →</button>
+        <button id="fillAll" type="button" class="ghost">Fill all panels</button>
+      </div>
+      <label>Photo in this panel
+        <select id="panelPhoto"></select>
+      </label>
+      <label>Zoom <span id="zoomVal">115%</span>
+        <input id="zoom" type="range" min="1" max="3" step="0.05" value="1.15">
+      </label>
+      <label>Move left / right
+        <input id="offsetX" type="range" min="-1" max="1" step="0.05" value="0">
+      </label>
+      <label>Move up / down
+        <input id="offsetY" type="range" min="-1" max="1" step="0.05" value="0">
+      </label>
+      <p class="hint">Tip: drag the cover itself to pan the selected panel.</p>
+    </div>
+
+    <div class="step">
+      <h2><span class="num">6</span> Export</h2>
+      <div id="sizeRow" class="toggles" role="group" aria-label="Export size"></div>
+      <button id="export" type="button" class="export-btn">Export PNG</button>
+      <p id="status" role="status"></p>
+    </div>
+  </section>
+
+  <section class="stage" aria-label="Cover preview">
+    <canvas id="preview" width="1080" height="1080" aria-label="The cover preview"></canvas>
+    <p class="stage-hint">Live preview — click a panel to select it, drag to pan its photo.</p>
+  </section>
+</main>
+<div class="drop-veil" aria-hidden="true">Drop photos to load them</div>
+<script type="module" src="./src/main.js"></script>
+</body>
+</html>
