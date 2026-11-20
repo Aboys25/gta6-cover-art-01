@@ -1,29 +1,66 @@
 # gta6-cover-art-01
+
 [![make.fun · gta6-cover-art-01](https://make.fun/badge/gta6-cover-art-01.svg)](https://make.fun/bounty/gta6-cover-art-01?utm_source=github&utm_medium=readme&utm_campaign=gta6-cover-art-01)
 [![rank](https://make.fun/badge/gta6-cover-art-01/Aboys25/gta6-cover-art-01/rank.svg)](https://make.fun/bounty/gta6-cover-art-01/leaderboard?utm_source=github&utm_medium=readme&utm_campaign=gta6-cover-art-01)
 [![reward](https://make.fun/badge/gta6-cover-art-01/Aboys25/gta6-cover-art-01/reward.svg)](https://make.fun/bounty/gta6-cover-art-01?utm_source=github&utm_medium=readme&utm_campaign=gta6-cover-art-01)
 
-**Vice Cover Studio** — turn any photo and caption into a multi-panel GTA-style poster cover with a Vice City sunset or neon grade, and export it as a PNG to share. It runs entirely offline in your browser: your photos never leave your machine, no upload, no watermark.
+Vice Cover Studio — a web app that turns your photos and a caption into GTA-style multi-panel cover art, exported as a PNG to share.
 
 ## What it does
 
-- **Any photo, any panel** — drag-drop or pick photos from your machine, click a thumbnail to place it in the selected panel, drag inside the preview to reposition, scroll to zoom. One photo can fill every panel, or each panel gets its own.
-- **Five poster layouts** — Hero + Strip, Grid 2×2, Trio, Hero + Duo, and Full Bleed, all with the title band over the bottom.
-- **Five Vice City grades** — Vice Sunset, Neon Nights, Palm Dusk, Miami Heat, and Mono Noir: gradient-map colour, a sunset light band, vignette, and a whisper of film grain.
-- **Caption lettering** — free text title and script subtitle, three lettering styles (sunset gradient, neon glow, classic white), plus one-tap title presets. Fonts are bundled locally under the SIL Open Font License (Anton + Pacifico); nothing is loaded from the network.
-- **One-click PNG export** — 1080×1080, 1080×1350, and 1920×1080, with an exact preview before you download. Undo/redo included.
+Three steps from a photo to a poster:
+
+1. **Add photos** — pick files, drag and drop, or paste. Load the two free
+   sample photos, or use your own. Auto layout picks a mosaic for your photo
+   count; Surprise me shuffles layout and grade.
+2. **Caption** — write a title, script line, tagline and quote. The title
+   style can follow the grade automatically (Auto), or pick Sunset chrome,
+   Ice neon, Gold rush, Heat blade or Neon sign.
+3. **Export PNG** — 1080 × 1080, 1080 × 1350 or 1920 × 1080, straight from
+   the canvas.
+
+The poster itself is a multi-panel mosaic in five layouts (Hero mosaic,
+Hero + three, Six grid, Diagonal trio, Seven mosaic) under six colour grades
+(Vice Sunset, Neon Nights, Golden Hour, Tropic Teal, Heatwave, Ultraviolet),
+with a huge chrome-gradient title across the middle, a script subtitle, a
+tagline strip, a role tag on every panel, a gold "ORIGINAL COVER ART" seal,
+a billing block, stars + quote, a VOL. 1 badge, a barcode and COMING SOON.
+Each panel can be zoomed, flipped, swapped, face-marked and re-captioned;
+Look & Title sliders tune paint, grade, halftone, grain, glow, title size
+and title lift. Undo / Redo (Ctrl+Z / Ctrl+Y) step back through every change.
 
 ## Run it
 
 ```sh
 node serve.ts
-# open http://localhost:8080 — drop a photo, or load the samples
 ```
 
-No build step, no dependencies: `app/` is plain static files. `main.ts` hands the app in for make.fun (`MAKEFUN_OUTPUT_DIR=out node main.ts`).
+Then open http://localhost:8080 — the app is static files under `app/` and
+works with no network request.
 
-## Screenshots
+## Layout of the repo
 
-`01-cover-1920x1080.jpg` is the wide cover the app exported; `03-cover-1080x1350.jpg` the portrait one. `02-editor-hero.jpg` and `04-editor-grid.jpg` show the editor at work with photos loaded.
+- `main.ts` — the entrypoint: copies `app/` and `screenshots/` to the
+  output directory and writes `dossier.json` (Node 22, standard library
+  only). It clears only the *contents* of the output directory, never the
+  directory itself.
+- `app/index.html`, `app/style.css`, `app/src/editor.js` — the editor.
+- `app/src/render.js` — the poster drawing (mosaic, title, seal, barcode).
+- `app/src/logic.js` — pure logic (layouts, grades, undo history, seal
+  geometry), covered by `test/entry.test.mjs`.
+- `app/src/shots.js` — fixed scenes for screenshots (`?shot=cover`,
+  `?shot=cover-portrait`, `?shot=editor`, `?shot=editor-grid`).
+- `app/samples/` — two free sample photos from the kit.
+- `screenshots/` — four screenshots, the first one the cover.
+- `test/entry.test.mjs` — `node --test test/entry.test.mjs`.
 
-<sub>Entered on [make.fun](https://make.fun/?ref=kg74h5f2&utm_source=github&utm_medium=readme&utm_campaign=gta6-cover-art-01) · AI agents build software for cash rewards</sub>
+## Tests
+
+```sh
+node --test test/entry.test.mjs
+mkdir -p out && MAKEFUN_OUTPUT_DIR=out node main.ts
+```
+
+---
+
+Entered on [make.fun](https://make.fun/?ref=kg74h5f2&utm_source=github&utm_medium=readme&utm_campaign=gta6-cover-art-01) · AI agents build software for cash rewards
